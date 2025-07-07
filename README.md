@@ -1,32 +1,105 @@
-# 📧 Cold Mail Generator
-Cold email generator for services company using groq, langchain and streamlit. It allows users to input the URL of a company's careers page. The tool then extracts job listings from that page and generates personalized cold emails. These emails include relevant portfolio links sourced from a vector database, based on the specific job descriptions. 
+# ColdMailer 🧊📧
 
-**Imagine a scenario:**
+ColdMailer is an AI-powered cold email generation tool built using **LangChain**, **Python**, and **Jupyter Notebook**. It leverages modern GenAI tools and web scraping to help users craft professional, targeted outreach emails tailored to specific contexts and clients.
 
-- Nike needs a Principal Software Engineer and is spending time and resources in the hiring process, on boarding, training etc
-- Atliq is Software Development company can provide a dedicated software development engineer to Nike. So, the business development executive (Mohan) from Atliq is going to reach out to Nike via a cold email.
+![image](https://github.com/user-attachments/assets/5f783ba4-eda3-4655-ba5f-291250451422)
+![image](https://github.com/user-attachments/assets/5bc1f01f-db2b-4a15-8d3a-4c55e8209c35)
 
-![img.png](imgs/img.png)
+---
 
-## Architecture Diagram
-![img.png](imgs/architecture.png)
+## ✨ Features
 
-## Set-up
-1. To get started we first need to get an API_KEY from here: https://console.groq.com/keys. Inside `app/.env` update the value of `GROQ_API_KEY` with the API_KEY you created. 
+- 🔍 **Automated Data Extraction**: Uses `WebBaseLoader` to scrape key information from websites.
+- 🧠 **Smart Prompting**: Integrates large language models (LLMs) for personalized cold email generation.
+- 📊 **JSON Parsing**: Processes and structures scraped data using `jsonparser` and `pandas`.
+- 🧪 **Notebook-based Prototyping**: Built in Jupyter for flexibility, experimentation, and analysis.
+- 🤩 **Modular Design**: Clean and customizable components for different industries or use cases.
 
+---
 
-2. To get started, first install the dependencies using:
-    ```commandline
-     pip install -r requirements.txt
-    ```
-   
-3. Run the streamlit app:
-   ```commandline
-   streamlit run app/main.py
-   ```
-   
+## 🛠️ Tech Stack
 
-Copyright (C) Codebasics Inc. All rights reserved.
+- **Python**
+- **LangChain**
+- **Jupyter Notebook**
+- **Pandas**
+- **WebBaseLoader**
+- **jsonparser**
+- **Groq (LLM integration)**
 
-**Additional Terms:**
-This software is licensed under the MIT License. However, commercial use of this software is strictly prohibited without prior written permission from the author. Attribution must be given in all copies or substantial portions of the software.
+---
+
+## 📁 Project Structure
+
+```
+ColdMailer/
+│
+├── .ipynb_checkpoints/         # Notebook checkpoints
+├── ColdMailer_Generator.ipynb  # Main notebook
+├── requirements.txt            # Python dependencies
+└── README.md                   # Project documentation
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repo
+
+```bash
+git clone https://github.com/prakharDvedi/ColdMailer.git
+cd ColdMailer
+```
+
+### 2. Install Dependencies
+
+Ensure you have Python 3.9+ and run:
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Run the Notebook
+
+Use Jupyter:
+
+```bash
+jupyter notebook ColdMailer_Generator.ipynb
+```
+
+---
+
+## 🧠 How It Works
+
+1. **Input a Company/Client Website URL**
+2. **WebBaseLoader** fetches relevant information.
+3. **LLM (via LangChain)** generates a context-aware cold email.
+4. Output: A well-written, personalized email ready to send.
+
+---
+
+## 📌 Use Cases
+
+- Freelancers and consultants reaching out to potential clients
+- Startups initiating B2B partnerships
+- Sales reps targeting leads with AI-generated intros
+- Resume or internship cold emails for students
+
+---
+
+## ⚠️ Disclaimer
+
+This tool uses AI to generate content. Please review and customize all emails before sending to ensure accuracy and relevance.
+
+---
+
+## 🤝 Contributing
+
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change or add.
+
+---
+
+## 📬 Contact
+
+Made with ❤️ by [Prakhar Dwivedi](https://github.com/prakharDvedi)  
+Reach out for collaborations, feedback, or just to connect!
