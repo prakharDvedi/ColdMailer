@@ -4,6 +4,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.exceptions import OutputParserException
 from dotenv import load_dotenv
+
 # import chromadb  # Temporarily disabled for deployment
 from pydantic import SecretStr
 
@@ -41,35 +42,44 @@ class Chain:
             raise OutputParserException("Context too big. Unable to parse jobs.")
         return res if isinstance(res, list) else [res]
 
-    def write_mail(self, job, links):
+    def write_mail(self, job, resume_text, name, college, unique):
         prompt_email = PromptTemplate.from_template(
             """
             ### JOB DESCRIPTION:
             {job_description}
 
-            ### INSTRUCTION:
-            You are Prakhar Dwivedi, a 3rd-year student at IIIT Bhopal specializing in AI-powered web development, full-stack MERN applications, Next.js, Python scripting, and data visualization with Power BI. You're currently working on impactful projects that blend automation, user experience, and smart analytics to solve real-world business problems.
-Youre reaching out to a potential client regarding a project theyve posted. Your goal is to write a concise, compelling cold email that highlights your capabilities in building custom, scalable AI or software solutions that optimize processes, reduce costs, or enhance user experiences—based on the job requirement.
+            ### RESUME:
+            {resume_text}
 
-Even though you're a student, your experience building real-world solutions like Ascend (a gamified self-growth app) or a GenAI-powered cold mail generator using LangChain and Groq proves your ability to deliver practical, results-driven outcomes.
+            ### INSTRUCTION:
+            You are {name}, {college}. {unique}.
+            You're reaching out to a potential client regarding a project they've posted. Your goal is to write a concise, compelling cold email that highlights your capabilities and relevant experience based on your resume and the job requirement.
+
+Mention your relevant experience, unique strengths, and any notable achievements or projects that demonstrate your ability to deliver results. Use your resume above to reference your skills and experience that match the client's needs.
 
 Structure your email like this:
 A warm, personalized intro.
 A brief connection to the job or business problem they're facing.
-How you can help: mention your technical skills (e.g., MERN, AI, Power BI), past results (e.g., 70% time reduction, 5x performance boosts), and approach.
-Attach or link to relevant portfolio projects that match their need.
+How you can help: mention your technical skills, past results, and approach.
 A friendly CTA to schedule a short call or demo.
-Also, include the most relevant ones from these links to showcase your portfolio: {link_list}.
 Sign off as:
-Prakhar Dwivedi
-MERN & GenAI Developer | IIIT Bhopal
-Specializing in Automations, AI-Driven Tools, and Data Intelligence
+{name}
+{college}
+{unique}
             ### EMAIL (NO PREAMBLE):
 
             """
         )
         chain_email = prompt_email | self.llm
-        res = chain_email.invoke({"job_description": str(job), "link_list": links})
+        res = chain_email.invoke(
+            {
+                "job_description": str(job),
+                "resume_text": resume_text,
+                "name": name,
+                "college": college,
+                "unique": unique,
+            }
+        )
         return res.content
 
 
