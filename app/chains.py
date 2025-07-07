@@ -4,7 +4,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.exceptions import OutputParserException
 from dotenv import load_dotenv
-import chromadb
+# import chromadb  # Temporarily disabled for deployment
 from pydantic import SecretStr
 
 
@@ -18,7 +18,7 @@ class Chain:
             temperature=0,
             api_key=SecretStr(os.getenv("GROQ_API_KEY") or ""),
         )
-        self.chroma_client = chromadb.Client()
+        # self.chroma_client = chromadb.Client()  # Temporarily disabled for deployment
 
     def extract_jobs(self, cleaned_text):
         prompt_extract = PromptTemplate.from_template(
@@ -36,7 +36,7 @@ class Chain:
         res = chain_extract.invoke(input={"page_data": cleaned_text})
         try:
             json_parser = JsonOutputParser()
-            res = json_parser.parse(res.content)
+            res = json_parser.parse(str(res.content))
         except OutputParserException:
             raise OutputParserException("Context too big. Unable to parse jobs.")
         return res if isinstance(res, list) else [res]
