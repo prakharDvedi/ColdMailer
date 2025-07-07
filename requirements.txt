@@ -1,5 +1,5 @@
 langchain==0.1.0
-langchain-community==0.0.20
+langchain_community>=0.0.30
 langchain-groq==0.0.1
 pandas==2.0.2
 python-dotenv==1.0.0

@@ -5,11 +5,15 @@ import pdfplumber
 from chains import Chain
 from utils import clean_text
 
+
 def extract_text_from_pdf(resume_file):
     if resume_file is None:
         return ""
     with pdfplumber.open(resume_file) as pdf:
-        return "\n".join(page.extract_text() for page in pdf.pages if page.extract_text())
+        return "\n".join(
+            page.extract_text() for page in pdf.pages if page.extract_text()
+        )
+
 
 def create_streamlit_app(llm, clean_text):
     st.set_page_config(layout="centered", page_title="ColdMailer", page_icon="📧")
@@ -27,8 +31,12 @@ def create_streamlit_app(llm, clean_text):
     col1, col2 = st.columns([4, 1], gap="small")
     with col1:
         name = st.text_input("Your Name", value="Prakhar Dwivedi")
-        college = st.text_input("Your College/Post", value="IIIT Bhopal, 3rd-year student")
-        unique = st.text_input("Something unique about you", value="AI hackathon winner")
+        college = st.text_input(
+            "Your College/Post", value="IIIT Bhopal, 3rd-year student"
+        )
+        unique = st.text_input(
+            "Something unique about you", value="AI hackathon winner"
+        )
         resume_file = st.file_uploader("Upload your resume (PDF only)", type=["pdf"])
         url_input = st.text_input(
             "Enter a Job/Career Page URL:",
@@ -63,8 +71,7 @@ def create_streamlit_app(llm, clean_text):
             except Exception as e:
                 st.error(f"An Error Occurred: {e}")
 
+
 if __name__ == "__main__":
     chain = Chain()
     create_streamlit_app(chain, clean_text)
-
-
