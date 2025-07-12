@@ -6,7 +6,6 @@ from langchain_core.exceptions import OutputParserException
 from dotenv import load_dotenv
 
 # import chromadb  # Temporarily disabled for deployment
-from pydantic import SecretStr
 
 
 load_dotenv()
@@ -14,10 +13,11 @@ load_dotenv()
 
 class Chain:
     def __init__(self):
+        if not os.getenv("GROQ_API_KEY"):
+            raise ValueError("GROQ_API_KEY environment variable is required")
         self.llm = ChatGroq(
             model="llama-3.1-8b-instant",
             temperature=0,
-            api_key=SecretStr(os.getenv("GROQ_API_KEY") or ""),
         )
         # self.chroma_client = chromadb.Client()  # Temporarily disabled for deployment
 
